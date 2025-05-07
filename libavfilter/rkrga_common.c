@@ -171,7 +171,7 @@ static uint32_t get_drm_afbc_format(enum AVPixelFormat pix_fmt)
     case AV_PIX_FMT_RGB0:     return DRM_FORMAT_XBGR8888;
     case AV_PIX_FMT_BGRA:     return DRM_FORMAT_ARGB8888;
     case AV_PIX_FMT_BGR0:     return DRM_FORMAT_XRGB8888;
-    default:                  return DRM_FORMAT_INVALID;
+    default:                  return DRM_FORMAT_MOD_INVALID;
     }
 }
 
@@ -183,7 +183,7 @@ static uint32_t get_drm_rfbc_format(enum AVPixelFormat pix_fmt)
     case AV_PIX_FMT_NV16:     return DRM_FORMAT_YUYV;
     case AV_PIX_FMT_NV20:     return DRM_FORMAT_Y210;
     case AV_PIX_FMT_NV24:     return DRM_FORMAT_VUY888;
-    default:                  return DRM_FORMAT_INVALID;
+    default:                  return DRM_FORMAT_MOD_INVALID;
     }
 }
 
@@ -629,7 +629,7 @@ static RGAFrame *query_frame(RKRGAContext *r, AVFilterLink *outlink,
     if (is_afbc) {
         uint32_t drm_afbc_fmt = get_drm_afbc_format(out_info->pix_fmt);
 
-        if (drm_afbc_fmt == DRM_FORMAT_INVALID) {
+        if (drm_afbc_fmt == DRM_FORMAT_MOD_INVALID) {
             av_log(ctx, AV_LOG_WARNING, "Output format '%s' with AFBC modifier is not supported\n",
                    av_get_pix_fmt_name(out_info->pix_fmt));
             r->afbc_out = 0;
@@ -662,7 +662,7 @@ static RGAFrame *query_frame(RKRGAContext *r, AVFilterLink *outlink,
         info.rd_mode = 1 << 1; /* IM_AFBC16x16_MODE */
 
         desc->objects[0].format_modifier =
-            DRM_FORMAT_MOD_ARM_AFBC(AFBC_FORMAT_MOD_SPARSE | AFBC_FORMAT_MOD_BLOCK_SIZE_16x16);
+            DRM_FORMAT_MOD_ARM_TYPE_AFBC(AFBC_FORMAT_MOD_SPARSE | AFBC_FORMAT_MOD_BLOCK_SIZE_16x16);
 
         layer = &desc->layers[0];
         layer->format = drm_afbc_fmt;
