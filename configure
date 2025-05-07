@@ -7133,9 +7133,7 @@ enabled pocketsphinx      && require_pkg_config pocketsphinx pocketsphinx pocket
 enabled rkmpp             && { { enabled libdrm ||
                                  die "ERROR: rkmpp requires --enable-libdrm"; }
                              }
-enabled rkrga             && { require_pkg_config rkrga librga rga/RgaApi.h c_RkRgaBlit &&
-                               require_pkg_config rkrga librga rga/im2d.h querystring &&
-                               { enabled rkmpp ||
+enabled rkrga             && { { enabled rkmpp ||
                                  die "ERROR: rkrga requires --enable-rkmpp"; }
                              }
 enabled vapoursynth       && require_headers "vapoursynth/VSScript4.h vapoursynth/VapourSynth4.h"
