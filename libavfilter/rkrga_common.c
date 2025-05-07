@@ -664,7 +664,7 @@ static RGAFrame *query_frame(RKRGAContext *r, AVFilterLink *outlink,
         info.rd_mode = 1 << 1; /* IM_AFBC16x16_MODE */
 
         desc->objects[0].format_modifier =
-            DRM_FORMAT_MOD_ARM_TYPE_AFBC(AFBC_FORMAT_MOD_SPARSE | AFBC_FORMAT_MOD_BLOCK_SIZE_16x16);
+            DRM_FORMAT_MOD_ARM_AFBC(AFBC_FORMAT_MOD_SPARSE | AFBC_FORMAT_MOD_BLOCK_SIZE_16x16);
 
         layer = &desc->layers[0];
         layer->format = drm_afbc_fmt;
